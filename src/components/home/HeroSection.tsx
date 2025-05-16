@@ -18,7 +18,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
+    <section className="relative h-screen min-h-[600px] w-full flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Carousel className="w-full h-full" autoPlay loop>
           <CarouselContent className="h-full">
@@ -63,6 +63,12 @@ const HeroSection = () => {
                 Our Story
               </Button>
             </Link>
+          </div>
+          <div className="mt-6 bg-white/20 backdrop-blur-sm p-4 rounded-lg">
+            <p className="text-white text-lg">
+              Discover the power of nature with our premium African skincare products. 
+              Our formulations harness traditional beauty secrets passed down through generations.
+            </p>
           </div>
         </div>
       </div>

@@ -34,7 +34,15 @@ const products = [
   },
 ];
 
+// Exchange rate (approximate)
+const exchangeRate = 1500;
+
 const FeaturedProducts = () => {
+  // Function to convert USD to Naira
+  const convertToNaira = (usdPrice: number) => {
+    return Math.round(usdPrice * exchangeRate);
+  };
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -63,7 +71,7 @@ const FeaturedProducts = () => {
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="text-muted-foreground text-sm mb-3">{product.description}</p>
-                <p className="text-xl font-semibold text-primary">${product.price.toFixed(2)}</p>
+                <p className="text-xl font-semibold text-primary">₦{convertToNaira(product.price).toLocaleString()}</p>
               </CardContent>
               <CardFooter>
                 <Button className="w-full bg-primary hover:bg-primary/90 transition-all duration-300">

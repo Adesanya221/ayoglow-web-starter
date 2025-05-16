@@ -6,6 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+// Exchange rate (approximate)
+const exchangeRate = 1500;
+
+// Function to convert USD to Naira
+const convertToNaira = (usdPrice: number) => {
+  return Math.round(usdPrice * exchangeRate);
+};
+
 const products = [
   {
     id: 1,
@@ -149,7 +157,7 @@ const Products = () => {
                     </CardHeader>
                     <CardContent className="pb-4">
                       <p className="text-muted-foreground text-sm mb-3">{product.description}</p>
-                      <p className="text-xl font-semibold text-primary">${product.price.toFixed(2)}</p>
+                      <p className="text-xl font-semibold text-primary">₦{convertToNaira(product.price).toLocaleString()}</p>
                     </CardContent>
                     <CardFooter>
                       <Button className="w-full bg-primary hover:bg-primary/90 transition-all duration-300">
