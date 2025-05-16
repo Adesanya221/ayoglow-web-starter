@@ -4,15 +4,21 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[80vh] min-h-[600px] flex items-center">
-      <div
-        className="absolute inset-0 bg-cover bg-center z-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(93, 64, 55, 0.85), rgba(93, 64, 55, 0.7)), url('/images/hero-bg.jpg')",
-        }}
-      ></div>
-      <div className="container mx-auto px-4 z-10 text-white">
+    <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          className="object-cover w-full h-full"
+        >
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-pouring-coconut-oil-in-a-bottle-with-a-dropper-10525-large.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 bg-primary/70 z-10"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 z-20 text-white">
         <div className="max-w-2xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-playfair mb-4">
             Natural Beauty, <br />

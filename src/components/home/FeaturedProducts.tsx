@@ -48,25 +48,27 @@ const FeaturedProducts = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
-            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow group">
               <div className="aspect-square overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <CardHeader>
-                <CardTitle className="font-playfair">{product.name}</CardTitle>
+              <CardHeader className="pb-2">
+                <CardTitle className="font-playfair text-xl">{product.name}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm mb-4">{product.description}</p>
+              <CardContent className="pb-4">
+                <p className="text-muted-foreground text-sm mb-3">{product.description}</p>
                 <p className="text-xl font-semibold text-primary">${product.price.toFixed(2)}</p>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-primary hover:bg-primary/90">Add to Cart</Button>
+                <Button className="w-full bg-primary hover:bg-primary/90 transition-all duration-300">
+                  Add to Cart
+                </Button>
               </CardFooter>
             </Card>
           ))}
@@ -74,7 +76,7 @@ const FeaturedProducts = () => {
 
         <div className="text-center mt-12">
           <Link to="/products">
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
+            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8 py-2">
               View All Products
             </Button>
           </Link>
