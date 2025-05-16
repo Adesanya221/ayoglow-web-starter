@@ -10,18 +10,20 @@ import {
 } from "@/components/ui/carousel";
 
 const HeroSection = () => {
-  const skinCareImages = [
-    "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1470&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1470&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1470&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1335&auto=format&fit=crop"
-  ];
+  // Commented out images - will be added locally later
+  // const skinCareImages = [
+  //   "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1470&auto=format&fit=crop",
+  //   "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1470&auto=format&fit=crop",
+  //   "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1470&auto=format&fit=crop",
+  //   "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1335&auto=format&fit=crop"
+  // ];
 
   return (
-    <section className="relative h-screen min-h-[600px] w-full flex items-center overflow-hidden">
+    <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Carousel className="w-full h-full" autoPlay loop>
           <CarouselContent className="h-full">
+            {/* Commented out image carousel items
             {skinCareImages.map((image, index) => (
               <CarouselItem key={index} className="h-full">
                 <div className="h-full w-full">
@@ -32,7 +34,7 @@ const HeroSection = () => {
                   />
                 </div>
               </CarouselItem>
-            ))}
+            ))} */}
           </CarouselContent>
         </Carousel>
         <div className="absolute inset-0 bg-primary/70 z-10"></div>
