@@ -1,0 +1,22 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#F9F5F0"/>
+  
+  <!-- Hand outline -->
+  <path d="M200,300 Q220,250 240,240 Q260,230 280,240 Q300,250 320,240 Q340,230 360,240 Q380,250 400,300 Q420,350 400,400 Q380,450 350,470 Q320,490 300,500 Q280,490 250,470 Q220,450 200,400 Q180,350 200,300 Z" fill="#F5D0A9" stroke="#8B5A2B" stroke-width="2"/>
+  
+  <!-- Fingers -->
+  <path d="M240,240 Q245,200 250,190 Q255,180 260,190 Q265,200 260,240" fill="#F5D0A9" stroke="#8B5A2B" stroke-width="2"/>
+  <path d="M280,240 Q285,180 290,160 Q295,140 300,160 Q305,180 300,240" fill="#F5D0A9" stroke="#8B5A2B" stroke-width="2"/>
+  <path d="M320,240 Q325,190 330,180 Q335,170 340,180 Q345,190 340,240" fill="#F5D0A9" stroke="#8B5A2B" stroke-width="2"/>
+  <path d="M360,240 Q365,210 370,200 Q375,190 380,200 Q385,210 380,240" fill="#F5D0A9" stroke="#8B5A2B" stroke-width="2"/>
+  
+  <!-- Shea butter in palm -->
+  <circle cx="290" cy="350" r="40" fill="#E6D2B5"/>
+  
+  <!-- Glow effect -->
+  <circle cx="290" cy="350" r="60" fill="none" stroke="#D4A76A" stroke-width="2" stroke-dasharray="5,5"/>
+  <circle cx="290" cy="350" r="80" fill="none" stroke="#D4A76A" stroke-width="1" stroke-dasharray="3,8"/>
+  
+  <text x="300" y="480" font-family="Arial" font-size="20" text-anchor="middle" fill="#8B5A2B">Application Demonstration</text>
+  <text x="300" y="510" font-family="Arial" font-size="16" text-anchor="middle" fill="#4A7C59">Melts on Contact with Skin</text>
+</svg> 

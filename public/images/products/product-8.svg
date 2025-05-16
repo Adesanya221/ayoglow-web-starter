@@ -1,0 +1,8 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#F9F5F0"/>
+  <rect x="190" y="120" width="120" height="160" fill="#FBECD1" rx="15" ry="15"/>
+  <rect x="215" y="100" width="70" height="30" fill="#8B5A2B" rx="10" ry="10"/>
+  <ellipse cx="250" cy="160" rx="40" ry="20" fill="#8B5A2B"/>
+  <text x="250" y="350" font-family="Arial" font-size="24" text-anchor="middle" fill="#8B5A2B">Cocoa Butter Lotion</text>
+  <text x="250" y="380" font-family="Arial" font-size="18" text-anchor="middle" fill="#4A7C59">Luxurious Hydration</text>
+</svg> 

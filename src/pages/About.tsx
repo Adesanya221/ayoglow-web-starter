@@ -1,11 +1,52 @@
-
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Newsletter from "@/components/home/Newsletter";
+import SEOHead from "@/components/SEO/SEOHead";
 
 const About = () => {
+  // Organization structured data
+  const organizationStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AyoGlow Naturals",
+    "url": "https://www.ayoglow.com",
+    "logo": "https://www.ayoglow.com/images/logo.png",
+    "foundingDate": "2020",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Adesanya Oluwafisayomi Ignatius"
+      }
+    ],
+    "description": "Premium organic African skincare products ethically sourced from Nigeria, including raw shea butter, African black soap, and natural oils.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "14 Kofo Abayomi Street",
+      "addressLocality": "Lagos",
+      "addressCountry": "Nigeria"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+234-800-AYOGLOW",
+      "contactType": "Customer Service",
+      "email": "hello@ayoglow.com"
+    },
+    "sameAs": [
+      "https://www.facebook.com/ayoglownaturals",
+      "https://www.instagram.com/ayoglow_naturals",
+      "https://twitter.com/ayoglow_naturals"
+    ]
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead 
+        title="About Us | AyoGlow Naturals - Organic African Skincare"
+        description="Discover AyoGlow Naturals' journey from Nigerian farms to global homes. We ethically source and export premium African skincare ingredients like raw shea butter and black soap, preserving traditional methods while supporting local communities."
+        keywords="AyoGlow Naturals history, organic African skincare, Nigerian beauty exports, ethical sourcing, traditional skincare methods, African beauty ingredients"
+        ogType="business.business"
+        structuredData={organizationStructuredData}
+      />
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
@@ -14,7 +55,7 @@ const About = () => {
             className="absolute inset-0 bg-cover bg-center z-0"
             style={{
               backgroundImage:
-                "linear-gradient(to right, rgba(93, 64, 55, 0.85), rgba(93, 64, 55, 0.7)), url('/images/about-hero.jpg')",
+                "linear-gradient(to right, rgba(93, 64, 55, 0.85), rgba(93, 64, 55, 0.7)), url('/images/about-hero.svg')",
             }}
           ></div>
           <div className="container mx-auto px-4 z-10 relative">
@@ -64,7 +105,7 @@ const About = () => {
               <div className="bg-white p-8 rounded-lg shadow-sm">
                 <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4 mx-auto">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold font-playfair text-center mb-3">Authenticity</h3>
@@ -110,9 +151,10 @@ const About = () => {
               <div className="text-center">
                 <div className="rounded-full overflow-hidden w-48 h-48 mx-auto mb-4">
                   <img
-                    src="/images/team-1.jpg"
-                    alt="Adesanya Oluwafisayomi Ignatius"
+                    src="/images/team-1.svg"
+                    alt="Adesanya Oluwafisayomi Ignatius - Founder & CEO of AyoGlow Naturals"
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <h3 className="text-xl font-bold font-playfair mb-1">Adesanya Oluwafisayomi Ignatius</h3>
@@ -125,9 +167,10 @@ const About = () => {
               <div className="text-center">
                 <div className="rounded-full overflow-hidden w-48 h-48 mx-auto mb-4">
                   <img
-                    src="/images/team-2.jpg"
-                    alt="Amina Okafor"
+                    src="/images/team-2.svg"
+                    alt="Amina Okafor - Lead Formulator at AyoGlow Naturals"
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <h3 className="text-xl font-bold font-playfair mb-1">Amina Okafor</h3>
@@ -140,9 +183,10 @@ const About = () => {
               <div className="text-center">
                 <div className="rounded-full overflow-hidden w-48 h-48 mx-auto mb-4">
                   <img
-                    src="/images/team-3.jpg"
-                    alt="Daniel Mensah"
+                    src="/images/team-3.svg"
+                    alt="Daniel Mensah - Sustainability Director at AyoGlow Naturals"
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <h3 className="text-xl font-bold font-playfair mb-1">Daniel Mensah</h3>

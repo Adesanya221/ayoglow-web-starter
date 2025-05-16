@@ -1,0 +1,19 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#F9F5F0"/>
+  
+  <!-- Background shape -->
+  <circle cx="200" cy="200" r="160" fill="#E7F5E8"/>
+  
+  <!-- Head shape -->
+  <circle cx="200" cy="170" r="80" fill="#A06E51"/>
+  
+  <!-- Shoulders -->
+  <path d="M120,260 Q200,290 280,260 L280,320 Q200,350 120,320 Z" fill="#D14D72"/>
+  
+  <!-- Details -->
+  <circle cx="170" cy="150" r="10" fill="#6D4C41"/>
+  <circle cx="230" cy="150" r="10" fill="#6D4C41"/>
+  <path d="M170,190 Q200,210 230,190" fill="none" stroke="#6D4C41" stroke-width="3"/>
+  
+  <text x="200" y="370" font-family="Arial" font-size="16" text-anchor="middle" fill="#4A7C59">Amina Okafor</text>
+</svg> 

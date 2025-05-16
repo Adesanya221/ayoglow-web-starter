@@ -1,0 +1,22 @@
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="600" fill="#5D4037"/>
+  
+  <!-- Background pattern -->
+  <path d="M0,300 Q300,400 600,300 Q900,200 1200,300 L1200,600 L0,600 Z" fill="#4A7C59" opacity="0.6"/>
+  <path d="M0,400 Q300,500 600,400 Q900,300 1200,400 L1200,600 L0,600 Z" fill="#356443" opacity="0.6"/>
+  
+  <!-- Tree silhouette -->
+  <path d="M200,600 L200,400 L150,400 L250,300 L350,400 L300,400 L300,600 Z" fill="#2D3B29"/>
+  <path d="M800,600 L800,450 L750,450 L850,350 L950,450 L900,450 L900,600 Z" fill="#2D3B29"/>
+  <path d="M500,600 L500,300 L450,300 L550,200 L650,300 L600,300 L600,600 Z" fill="#2D3B29"/>
+  <path d="M1000,600 L1000,350 L950,350 L1050,250 L1150,350 L1100,350 L1100,600 Z" fill="#2D3B29"/>
+  
+  <!-- Natural elements silhouettes -->
+  <circle cx="150" cy="150" r="50" fill="#D4A76A"/>
+  <circle cx="1050" cy="150" r="50" fill="#E6D2B5"/>
+  
+  <path d="M300,250 Q350,200 400,250 Q450,300 500,250 Q550,200 600,250 Q650,300 700,250 Q750,200 800,250 Q850,300 900,250" fill="none" stroke="#E6D2B5" stroke-width="5"/>
+  
+  <text x="600" y="450" font-family="Arial" font-weight="bold" font-size="60" text-anchor="middle" fill="#F2E6C9">OUR JOURNEY</text>
+  <text x="600" y="520" font-family="Arial" font-size="36" text-anchor="middle" fill="#F2E6C9">From Nigerian Farms to Global Homes</text>
+</svg> 

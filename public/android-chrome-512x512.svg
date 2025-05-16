@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#4A7C59"/>
+  <circle cx="256" cy="216" r="140" fill="#F2E6C9"/>
+  <path d="M196,196 Q256,166 316,196 Q346,226 316,256 Q256,286 196,256 Q166,226 196,196" fill="#D4A76A"/>
+  <text x="256" y="410" font-family="Arial" font-weight="bold" font-size="80" text-anchor="middle" fill="#F2E6C9">AYOGLOW</text>
+  <text x="256" y="450" font-family="Arial" font-size="36" text-anchor="middle" fill="#F2E6C9">NATURALS</text>
+</svg> 

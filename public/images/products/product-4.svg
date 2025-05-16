@@ -1,0 +1,7 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#F9F5F0"/>
+  <circle cx="250" cy="200" r="100" fill="#FFF9E6"/>
+  <path d="M220,140 Q250,120 280,140 Q310,160 280,180 Q250,200 220,180 Q190,160 220,140" fill="#D4A76A"/>
+  <text x="250" y="350" font-family="Arial" font-size="24" text-anchor="middle" fill="#8B5A2B">Coconut Body Butter</text>
+  <text x="250" y="380" font-family="Arial" font-size="18" text-anchor="middle" fill="#4A7C59">Rich Moisturizer</text>
+</svg> 

@@ -9,7 +9,7 @@ const BrandStory = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <img
-              src="/images/brand-story.jpg"
+              src="/images/hero/girlf.jpg"
               alt="AyoGlow Natural Ingredients"
               className="rounded-lg shadow-lg w-full h-auto object-cover"
             />

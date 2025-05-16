@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="30" fill="#4A7C59"/>
+  <circle cx="96" cy="86" r="55" fill="#F2E6C9"/>
+  <path d="M76,76 Q96,66 116,76 Q126,86 116,96 Q96,106 76,96 Q66,86 76,76" fill="#D4A76A"/>
+  <text x="96" y="160" font-family="Arial" font-weight="bold" font-size="28" text-anchor="middle" fill="#F2E6C9">AYOGLOW</text>
+</svg> 

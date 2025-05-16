@@ -1,43 +1,53 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from "@/components/ui/carousel";
+import { useEffect, useRef } from "react";
+import { optimizeVideoQuality } from "./VideoProcessor";
 
 const HeroSection = () => {
-  // Commented out images - will be added locally later
-  // const skinCareImages = [
-  //   "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1470&auto=format&fit=crop",
-  //   "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1470&auto=format&fit=crop",
-  //   "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1470&auto=format&fit=crop",
-  //   "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1335&auto=format&fit=crop"
-  // ];
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Optimize video quality using our utility
+    optimizeVideoQuality(videoRef.current);
+  }, []);
 
   return (
     <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <Carousel className="w-full h-full" autoPlay loop>
-          <CarouselContent className="h-full">
-            {/* Commented out image carousel items
-            {skinCareImages.map((image, index) => (
-              <CarouselItem key={index} className="h-full">
-                <div className="h-full w-full">
-                  <img 
-                    src={image} 
-                    alt={`Skincare image ${index + 1}`} 
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              </CarouselItem>
-            ))} */}
-          </CarouselContent>
-        </Carousel>
-        <div className="absolute inset-0 bg-primary/70 z-10"></div>
+        {/* Background Video */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover"
+          style={{ 
+            objectFit: 'cover',
+            width: '100%',
+            height: '100%',
+            // Apply hardware acceleration and prevent edge artifacts
+            transform: 'translateZ(0) scale(1.01)',
+            // Use best possible image rendering
+            imageRendering: 'auto',
+          }}
+        >
+          {/* WebM format for better quality/size ratio (if available) */}
+          <source 
+            src="/images/hero/back-video.webm" 
+            type="video/webm"
+            sizes="100vw"
+          />
+          {/* MP4 format as fallback */}
+          <source 
+            src="/images/hero/back-video.mp4" 
+            type="video/mp4"
+            sizes="100vw"
+          />
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 bg-primary/60 z-10"></div>
       </div>
       
       <div className="container mx-auto px-4 z-20 text-white">
@@ -59,8 +69,8 @@ const HeroSection = () => {
             </Link>
             <Link to="/about">
               <Button
-                variant="outline"
-                className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
+                variant="ghost"
+                className="text-white hover:bg-white/10 px-8 py-6 text-lg border-0"
               >
                 Our Story
               </Button>
