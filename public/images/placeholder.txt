@@ -1,0 +1,12 @@
+
+This file is a placeholder. To complete the website implementation, please upload the following images:
+
+1. hero-bg.jpg - A beautiful image showing African skincare ingredients or a person applying natural skincare products
+2. product-1.jpg through product-8.jpg - Images of the different skincare products
+3. brand-story.jpg - Image showing ingredient sourcing or product making process
+4. about-hero.jpg - Image related to the brand's story
+5. team-1.jpg through team-3.jpg - Images of team members
+6. contact-hero.jpg - Image for contact page header
+7. map.jpg - A map showing business location
+
+You can replace these with actual product and brand images once available.
