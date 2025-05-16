@@ -1,20 +1,40 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
 
 const HeroSection = () => {
+  const skinCareImages = [
+    "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1470&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1470&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1470&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&w=1335&auto=format&fit=crop"
+  ];
+
   return (
     <section className="relative h-[80vh] min-h-[600px] flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          className="object-cover w-full h-full"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-pouring-coconut-oil-in-a-bottle-with-a-dropper-10525-large.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <Carousel className="w-full h-full" autoPlay loop>
+          <CarouselContent className="h-full">
+            {skinCareImages.map((image, index) => (
+              <CarouselItem key={index} className="h-full">
+                <div className="h-full w-full">
+                  <img 
+                    src={image} 
+                    alt={`Skincare image ${index + 1}`} 
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
         <div className="absolute inset-0 bg-primary/70 z-10"></div>
       </div>
       
