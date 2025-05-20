@@ -5,10 +5,37 @@ const SoundPlayer = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [soundsInitialized, setSoundsInitialized] = useState(false);
   const autoplayAttempted = useRef(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
   const [customSoundEnabled, setCustomSoundEnabled] = useState(() => {
     const savedState = localStorage.getItem('customSoundEnabled');
     return savedState ? savedState === 'true' : true; // Enable by default
   });
+
+  // Function to initialize Web Audio API context with user gesture
+  const initAudioContext = () => {
+    if (!audioContextRef.current) {
+      try {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        audioContextRef.current = new AudioContext();
+        
+        // Create and play a silent sound to unlock audio on iOS
+        const silentSound = audioContextRef.current.createOscillator();
+        const gainNode = audioContextRef.current.createGain();
+        gainNode.gain.value = 0.001; // Almost silent
+        silentSound.connect(gainNode);
+        gainNode.connect(audioContextRef.current.destination);
+        silentSound.start();
+        silentSound.stop(audioContextRef.current.currentTime + 0.001);
+        
+        console.log('Audio context initialized:', audioContextRef.current.state);
+        return true;
+      } catch (error) {
+        console.error('Failed to initialize audio context:', error);
+        return false;
+      }
+    }
+    return audioContextRef.current.state === 'running';
+  };
 
   // Function to attempt autoplay (may be blocked by browser)
   const attemptAutoplay = () => {
@@ -18,23 +45,56 @@ const SoundPlayer = () => {
     const isMuted = SoundService.getMuteState();
     if (!isMuted) {
       try {
-        // Try to play the sound automatically
-        SoundService.playWelcome();
-        console.log('Auto-playing welcome sound on app launch');
+        // Initialize audio context first
+        initAudioContext();
         
-        // If welcome sound succeeded, try custom sound and background music
-        setTimeout(() => {
-          if (customSoundEnabled) {
-            SoundService.playCustomSound();
+        // Add visibility change listener to play when tab becomes visible
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible' && !hasInteracted) {
+            playAllSounds();
           }
-          
-          setTimeout(() => {
-            SoundService.playBackgroundMusic();
-          }, 500);
-        }, 300);
+        });
+        
+        // Try auto-play with very short timeout
+        setTimeout(() => {
+          playAllSounds();
+        }, 100);
+        
+        // Also try with various delays as a fallback
+        setTimeout(() => playAllSounds(), 1000);
+        setTimeout(() => playAllSounds(), 2500);
       } catch (error) {
         console.log('Autoplay was blocked, waiting for user interaction', error);
       }
+    }
+  };
+  
+  // Function to play all sounds in sequence
+  const playAllSounds = () => {
+    if (SoundService.getMuteState()) return;
+    
+    try {
+      // Try to unlock audio context first
+      if (audioContextRef.current && audioContextRef.current.state !== 'running') {
+        audioContextRef.current.resume();
+      }
+      
+      // Play welcome sound
+      SoundService.playWelcome();
+      console.log('Playing welcome sound');
+      
+      // If welcome sound succeeded, try custom sound and background music
+      setTimeout(() => {
+        if (customSoundEnabled) {
+          SoundService.playCustomSound();
+        }
+        
+        setTimeout(() => {
+          SoundService.playBackgroundMusic();
+        }, 500);
+      }, 300);
+    } catch (error) {
+      console.error('Error playing sounds:', error);
     }
   };
 
@@ -50,6 +110,9 @@ const SoundPlayer = () => {
     const hasUserInteracted = sessionStorage.getItem('hasInteracted') === 'true';
     setHasInteracted(hasUserInteracted);
     
+    // Initialize audio context
+    initAudioContext();
+    
     // Attempt autoplay when component mounts
     attemptAutoplay();
     
@@ -60,51 +123,51 @@ const SoundPlayer = () => {
       }, 1000);
     }
 
+    // Auto-play when page loads or becomes visible
+    if (document.visibilityState === 'visible') {
+      playAllSounds();
+    }
+
     // Add event listeners to detect first user interaction
     const handleInteraction = () => {
-      if (!hasUserInteracted) {
+      if (!hasInteracted) {
         setHasInteracted(true);
         sessionStorage.setItem('hasInteracted', 'true');
+        
+        // Resume audio context on user interaction
+        if (audioContextRef.current && audioContextRef.current.state !== 'running') {
+          audioContextRef.current.resume()
+            .then(() => console.log('AudioContext resumed successfully'))
+            .catch(err => console.error('Failed to resume AudioContext:', err));
+        }
         
         // Only play sounds if not muted
         if (!SoundService.getMuteState()) {
           // Small delay to ensure the audio context is properly initialized
           setTimeout(() => {
-            try {
-              // Play welcome sound
-              SoundService.playWelcome();
-              console.log('Welcome sound triggered after user interaction');
-              
-              // Play custom sound if enabled
-              if (customSoundEnabled) {
-                setTimeout(() => {
-                  SoundService.playCustomSound();
-                  console.log('Custom sound played');
-                }, 500);
-              }
-              
-              // Start background music after welcome sound
-              setTimeout(() => {
-                SoundService.playBackgroundMusic();
-                console.log('Background music started');
-              }, 1000);
-            } catch (error) {
-              console.error('Failed to play sounds:', error);
-            }
+            playAllSounds();
           }, 100);
         }
         
         // Remove event listeners after first interaction
-        document.removeEventListener('click', handleInteraction);
-        document.removeEventListener('touchstart', handleInteraction);
-        document.removeEventListener('keydown', handleInteraction);
+        document.removeEventListener('click', handleInteraction, true);
+        document.removeEventListener('touchstart', handleInteraction, true);
+        document.removeEventListener('touchend', handleInteraction, true);
+        document.removeEventListener('keydown', handleInteraction, true);
+        document.removeEventListener('pointerdown', handleInteraction, true);
+        document.removeEventListener('pointerup', handleInteraction, true);
+        window.removeEventListener('scroll', handleInteraction, true);
       }
     };
 
-    // Add event listeners
-    document.addEventListener('click', handleInteraction);
-    document.addEventListener('touchstart', handleInteraction);
-    document.addEventListener('keydown', handleInteraction);
+    // Add event listeners with capture to ensure they fire first
+    document.addEventListener('click', handleInteraction, true);
+    document.addEventListener('touchstart', handleInteraction, true);
+    document.addEventListener('touchend', handleInteraction, true);
+    document.addEventListener('keydown', handleInteraction, true);
+    document.addEventListener('pointerdown', handleInteraction, true);
+    document.addEventListener('pointerup', handleInteraction, true);
+    window.addEventListener('scroll', handleInteraction, true);
 
     // Custom sound toggle state handler
     const toggleCustomSound = (event) => {
@@ -119,12 +182,17 @@ const SoundPlayer = () => {
 
     // Clean up event listeners on component unmount
     return () => {
-      document.removeEventListener('click', handleInteraction);
-      document.removeEventListener('touchstart', handleInteraction);
-      document.removeEventListener('keydown', handleInteraction);
+      document.removeEventListener('click', handleInteraction, true);
+      document.removeEventListener('touchstart', handleInteraction, true);
+      document.removeEventListener('touchend', handleInteraction, true);
+      document.removeEventListener('keydown', handleInteraction, true);
+      document.removeEventListener('pointerdown', handleInteraction, true);
+      document.removeEventListener('pointerup', handleInteraction, true);
+      window.removeEventListener('scroll', handleInteraction, true);
       window.removeEventListener('custom-sound-toggle', toggleCustomSound);
+      document.removeEventListener('visibilitychange', null);
     };
-  }, [customSoundEnabled]);
+  }, [customSoundEnabled, hasInteracted]);
 
   return null; // This component doesn't render anything visible
 };
