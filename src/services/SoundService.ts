@@ -1,11 +1,12 @@
 // Sound files paths
 const SOUNDS = {
-  WELCOME: '/audio/welcome.mp3',
+  WELCOME: '/audio/fashion-beauty-luxury-music-331431.mp3',
   ADD_TO_CART: '/audio/add-to-cart.mp3',
   SUCCESS: '/audio/success.mp3',
   ERROR: '/audio/error.mp3',
   NOTIFICATION: '/audio/notification.mp3',
-  BACKGROUND_MUSIC: '/audio/background-music.mp3', // Background music track
+  BACKGROUND_MUSIC: '/audio/fashion-beauty-luxury-music-331431.mp3', // Background music track
+  CUSTOM_SOUND: '/audio/fashion-beauty-luxury-music-331431.mp3', // Add your custom sound file name here
 };
 
 // Pre-load audio objects
@@ -18,10 +19,10 @@ Object.entries(SOUNDS).forEach(([key, path]) => {
     
     // Set different default volume for background music
     if (key === 'BACKGROUND_MUSIC') {
-      audio.volume = 0.5; // Medium volume (50%)
+      audio.volume = 0.3; // Reduced by 40% from 0.5 (50%) to 0.3 (30%)
       audio.loop = true; // Loop the background music
     } else {
-      audio.volume = 0.3; // Default volume at 30% for other sounds
+      audio.volume = 0.18; // Reduced by 40% from 0.3 (30%) to 0.18 (18%)
     }
     
     audio.preload = 'auto';
@@ -169,6 +170,13 @@ class SoundService {
    */
   static playNotification(): void {
     this.play('NOTIFICATION');
+  }
+
+  /**
+   * Play custom sound
+   */
+  static playCustomSound(): void {
+    this.play('CUSTOM_SOUND');
   }
 }
 
