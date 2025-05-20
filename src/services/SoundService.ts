@@ -12,9 +12,14 @@ const SOUNDS = {
 // Pre-load audio objects
 const audioElements: { [key: string]: HTMLAudioElement | null } = {};
 
-// Initialize audio elements
+// Pre-buffered audio objects for instant playback
+const bufferedSounds: { [key: string]: AudioBuffer | null } = {};
+let audioContext: AudioContext | null = null;
+
+// Initialize audio elements with optimizations
 Object.entries(SOUNDS).forEach(([key, path]) => {
   try {
+    // Create standard HTML5 Audio element for fallback
     const audio = new Audio(path);
     
     // Set different default volume for background music
@@ -25,6 +30,7 @@ Object.entries(SOUNDS).forEach(([key, path]) => {
       audio.volume = 0.18; // Reduced by 40% from 0.3 (30%) to 0.18 (18%)
     }
     
+    // Set high priority for audio element
     audio.preload = 'auto';
     
     // Add error handler for loading failures
@@ -34,6 +40,25 @@ Object.entries(SOUNDS).forEach(([key, path]) => {
     });
     
     audioElements[key] = audio;
+    
+    // Pre-cache the audio for instant response
+    if (key !== 'BACKGROUND_MUSIC') { // Only buffer small sounds, not large music files
+      fetch(path)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => {
+          if (!audioContext) {
+            audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+          }
+          return audioContext.decodeAudioData(arrayBuffer);
+        })
+        .then(audioBuffer => {
+          bufferedSounds[key] = audioBuffer;
+          console.log(`Sound ${key} pre-buffered for instant playback`);
+        })
+        .catch(error => {
+          console.warn(`Failed to pre-buffer sound: ${path}`, error);
+        });
+    }
   } catch (error) {
     console.error(`Failed to create audio element: ${path}`, error);
     audioElements[key] = null;
@@ -75,11 +100,57 @@ class SoundService {
   }
 
   /**
-   * Play a sound by key if not muted
+   * Initialize or resume AudioContext
+   */
+  static initAudioContext(): AudioContext | null {
+    try {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      
+      if (audioContext.state !== 'running') {
+        audioContext.resume();
+      }
+      
+      return audioContext;
+    } catch (error) {
+      console.error('Failed to initialize audio context:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Play a sound by key if not muted - uses Web Audio API for small sounds when possible
    */
   static play(soundKey: keyof typeof SOUNDS): void {
     if (this.isMuted) return;
     
+    // Try to play using buffered sound for faster response (except background music)
+    if (soundKey !== 'BACKGROUND_MUSIC' && bufferedSounds[soundKey] && audioContext) {
+      try {
+        // Make sure audio context is running
+        if (audioContext.state !== 'running') {
+          audioContext.resume();
+        }
+        
+        const source = audioContext.createBufferSource();
+        source.buffer = bufferedSounds[soundKey];
+        
+        const gainNode = audioContext.createGain();
+        gainNode.gain.value = 0.18; // UI sounds are always at this volume
+        
+        source.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        source.start(0);
+        return;
+      } catch (error) {
+        console.warn(`Failed to play buffered sound: ${soundKey}`, error);
+        // Fall back to HTML5 Audio
+      }
+    }
+    
+    // Fallback to HTML5 Audio
     const audio = audioElements[soundKey];
     if (audio) {
       // Reset and play
@@ -87,14 +158,17 @@ class SoundService {
       audio.currentTime = 0;
       
       // Use promise with better error handling
-      audio.play()
-        .catch(err => {
-          console.warn(`Failed to play sound: ${soundKey}`, err);
-          // Remove the problematic audio element to prevent future errors
-          if (err.name === 'NotSupportedError' || err.name === 'NotAllowedError') {
-            audioElements[soundKey] = null;
-          }
-        });
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .catch(err => {
+            console.warn(`Failed to play sound: ${soundKey}`, err);
+            // Remove the problematic audio element to prevent future errors
+            if (err.name === 'NotSupportedError' || err.name === 'NotAllowedError') {
+              audioElements[soundKey] = null;
+            }
+          });
+      }
     }
   }
   
@@ -106,15 +180,18 @@ class SoundService {
     
     const audio = audioElements['BACKGROUND_MUSIC'];
     if (audio) {
-      audio.play()
-        .then(() => {
-          this.backgroundMusicPlaying = true;
-          console.log('Background music started playing');
-        })
-        .catch(err => {
-          console.warn('Failed to play background music', err);
-          this.backgroundMusicPlaying = false;
-        });
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            this.backgroundMusicPlaying = true;
+            console.log('Background music started playing');
+          })
+          .catch(err => {
+            console.warn('Failed to play background music', err);
+            this.backgroundMusicPlaying = false;
+          });
+      }
     }
   }
   
